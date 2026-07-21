@@ -729,14 +729,14 @@ static int LZ4_compress_destSize_extState(
 	const tableType_t tableType = byPtr;
 #endif
 
-	LZ4_resetStream(state);
-
 	if (targetDstSize >= LZ4_COMPRESSBOUND(*srcSizePtr)) {
 		/* compression success is guaranteed */
 		return LZ4_compress_fast_extState(
 			state, src, dst, *srcSizePtr,
 			targetDstSize, 1);
 	} else {
+		LZ4_resetStream(state);
+
 		if (*srcSizePtr < LZ4_64Klimit)
 			return LZ4_compress_destSize_generic(
 				&state->internal_donotuse,
